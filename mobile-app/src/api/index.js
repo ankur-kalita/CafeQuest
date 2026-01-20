@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
+import storage from './storage';
 
 // Update this URL when deploying backend
 const API_URL = 'http://localhost:5001/api';
@@ -14,7 +14,7 @@ const api = axios.create({
 // Add auth token to requests
 api.interceptors.request.use(
   async (config) => {
-    const token = await SecureStore.getItemAsync('token');
+    const token = await storage.getItemAsync('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
