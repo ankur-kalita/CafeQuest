@@ -11,7 +11,7 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from '../components/Icon';
 import { useAuth } from '../context/AuthContext';
 import { COLORS, SIZES, SHADOWS } from '../constants/theme';
 import CoffeeIllustration from '../components/CoffeeIllustration';
@@ -58,7 +58,7 @@ const LoginScreen = ({ navigation }) => {
 
         <View style={styles.form}>
           <View style={styles.inputContainer}>
-            <Ionicons name="mail-outline" size={20} color={COLORS.textMuted} style={styles.inputIcon} />
+            <Icon name="mail-outline" size={20} color={COLORS.textMuted} style={styles.inputIcon} />
             <TextInput
               style={styles.input}
               placeholder="Email"
@@ -72,7 +72,7 @@ const LoginScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="lock-closed-outline" size={20} color={COLORS.textMuted} style={styles.inputIcon} />
+            <Icon name="lock-closed-outline" size={20} color={COLORS.textMuted} style={styles.inputIcon} />
             <TextInput
               style={styles.input}
               placeholder="Password"
@@ -83,7 +83,7 @@ const LoginScreen = ({ navigation }) => {
               autoCapitalize="none"
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-              <Ionicons
+              <Icon
                 name={showPassword ? 'eye-outline' : 'eye-off-outline'}
                 size={20}
                 color={COLORS.textMuted}

@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from '../components/Icon';
 import { useAuth } from '../context/AuthContext';
 import { cafesAPI } from '../api';
 import { COLORS, SIZES, SHADOWS } from '../constants/theme';
@@ -117,17 +117,17 @@ const ProfileScreen = () => {
       {/* Stats Cards */}
       <View style={styles.statsContainer}>
         <View style={styles.statCard}>
-          <Ionicons name="cafe" size={28} color={COLORS.primary} />
+          <Icon name="cafe" size={28} color={COLORS.primary} />
           <Text style={styles.statNumber}>{stats.totalCafes}</Text>
           <Text style={styles.statLabel}>Total Cafes</Text>
         </View>
         <View style={styles.statCard}>
-          <Ionicons name="checkmark-circle" size={28} color={COLORS.success} />
+          <Icon name="checkmark-circle" size={28} color={COLORS.success} />
           <Text style={styles.statNumber}>{stats.visitedCafes}</Text>
           <Text style={styles.statLabel}>Visited</Text>
         </View>
         <View style={styles.statCard}>
-          <Ionicons name="bookmark" size={28} color={COLORS.accent} />
+          <Icon name="bookmark" size={28} color={COLORS.accent} />
           <Text style={styles.statNumber}>{stats.wishlistCafes}</Text>
           <Text style={styles.statLabel}>Wishlist</Text>
         </View>
@@ -148,7 +148,7 @@ const ProfileScreen = () => {
                     </Text>
                   </View>
                   <View style={styles.tagContent}>
-                    <Ionicons name={tagInfo.icon} size={20} color={COLORS.primary} />
+                    <Icon name={tagInfo.icon} size={20} color={COLORS.primary} />
                     <Text style={styles.tagName}>{tagInfo.label}</Text>
                   </View>
                   <Text style={styles.tagCount}>{count} cafes</Text>
@@ -165,33 +165,33 @@ const ProfileScreen = () => {
         <View style={styles.menuContainer}>
           <TouchableOpacity style={styles.menuItem}>
             <View style={styles.menuLeft}>
-              <Ionicons name="person-outline" size={22} color={COLORS.text} />
+              <Icon name="person-outline" size={22} color={COLORS.text} />
               <Text style={styles.menuText}>Edit Profile</Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={COLORS.textMuted} />
+            <Icon name="chevron-forward" size={20} color={COLORS.textMuted} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.menuItem}>
             <View style={styles.menuLeft}>
-              <Ionicons name="settings-outline" size={22} color={COLORS.text} />
+              <Icon name="settings-outline" size={22} color={COLORS.text} />
               <Text style={styles.menuText}>Settings</Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={COLORS.textMuted} />
+            <Icon name="chevron-forward" size={20} color={COLORS.textMuted} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.menuItem}>
             <View style={styles.menuLeft}>
-              <Ionicons name="help-circle-outline" size={22} color={COLORS.text} />
+              <Icon name="help-circle-outline" size={22} color={COLORS.text} />
               <Text style={styles.menuText}>Help & Support</Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={COLORS.textMuted} />
+            <Icon name="chevron-forward" size={20} color={COLORS.textMuted} />
           </TouchableOpacity>
         </View>
       </View>
 
       {/* Logout Button */}
       <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
-        <Ionicons name="log-out-outline" size={22} color={COLORS.error} />
+        <Icon name="log-out-outline" size={22} color={COLORS.error} />
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
 

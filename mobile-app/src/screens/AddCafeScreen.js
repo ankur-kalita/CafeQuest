@@ -14,7 +14,7 @@ import {
   Platform,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from '../components/Icon';
 import { cafesAPI, uploadAPI } from '../api';
 import TagSelector from '../components/TagSelector';
 import RatingInput from '../components/RatingInput';
@@ -179,13 +179,13 @@ const AddCafeScreen = ({ navigation, route }) => {
             <Image source={{ uri: photo }} style={styles.image} />
           ) : (
             <View style={styles.imagePlaceholder}>
-              <Ionicons name="camera-outline" size={48} color={COLORS.textMuted} />
+              <Icon name="camera-outline" size={48} color={COLORS.textMuted} />
               <Text style={styles.imagePlaceholderText}>Add Photo</Text>
             </View>
           )}
           {photo && !uploadingImage && (
             <View style={styles.changePhotoBtn}>
-              <Ionicons name="camera" size={16} color={COLORS.white} />
+              <Icon name="camera" size={16} color={COLORS.white} />
             </View>
           )}
         </TouchableOpacity>

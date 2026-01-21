@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from '../components/Icon';
 import { useAuth } from '../context/AuthContext';
 import { COLORS } from '../constants/theme';
 
@@ -46,7 +46,7 @@ const MainTabs = () => (
           iconName = focused ? 'person' : 'person-outline';
         }
 
-        return <Ionicons name={iconName} size={focused ? 26 : 24} color={color} />;
+        return <Icon name={iconName} size={focused ? 26 : 24} color={color} />;
       },
       tabBarActiveTintColor: COLORS.primary,
       tabBarInactiveTintColor: COLORS.textMuted,

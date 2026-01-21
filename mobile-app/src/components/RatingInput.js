@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from './Icon';
 import { COLORS } from '../constants/theme';
 
 const RatingInput = ({ rating = 0, onRatingChange, size = 32, disabled = false }) => {
@@ -19,7 +19,7 @@ const RatingInput = ({ rating = 0, onRatingChange, size = 32, disabled = false }
           disabled={disabled}
           style={styles.star}
         >
-          <Ionicons
+          <Icon
             name={value <= rating ? 'star' : 'star-outline'}
             size={size}
             color={COLORS.star}

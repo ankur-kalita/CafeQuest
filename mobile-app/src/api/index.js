@@ -1,8 +1,11 @@
 import axios from 'axios';
+import { Platform } from 'react-native';
 import storage from './storage';
 
-// Update this URL when deploying backend
-const API_URL = 'http://localhost:5001/api';
+// Use localhost for web, IP address for physical device
+const API_URL = Platform.OS === 'web'
+  ? 'http://localhost:5001/api'
+  : 'http://10.0.6.137:5001/api';
 
 const api = axios.create({
   baseURL: API_URL,

@@ -9,7 +9,7 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from '../components/Icon';
 import { cafesAPI } from '../api';
 import RatingInput from '../components/RatingInput';
 import { COLORS, SIZES, SHADOWS } from '../constants/theme';
@@ -103,7 +103,7 @@ const CafeDetailScreen = ({ navigation, route }) => {
             <Image source={{ uri: cafe.photo }} style={styles.image} />
           ) : (
             <View style={[styles.image, styles.imagePlaceholder]}>
-              <Ionicons name="cafe-outline" size={64} color={COLORS.textMuted} />
+              <Icon name="cafe-outline" size={64} color={COLORS.textMuted} />
             </View>
           )}
           <View style={styles.imageOverlay}>
@@ -121,7 +121,7 @@ const CafeDetailScreen = ({ navigation, route }) => {
           <View style={styles.header}>
             <Text style={styles.name}>{cafe.name}</Text>
             <View style={styles.locationRow}>
-              <Ionicons name="location-outline" size={18} color={COLORS.textLight} />
+              <Icon name="location-outline" size={18} color={COLORS.textLight} />
               <Text style={styles.location}>{cafe.location}</Text>
             </View>
           </View>
@@ -144,7 +144,7 @@ const CafeDetailScreen = ({ navigation, route }) => {
                   const tag = getTagById(tagId);
                   return tag ? (
                     <View key={tagId} style={styles.tag}>
-                      <Ionicons name={tag.icon} size={16} color={COLORS.primary} />
+                      <Icon name={tag.icon} size={16} color={COLORS.primary} />
                       <Text style={styles.tagText}>{tag.label}</Text>
                     </View>
                   ) : null;
@@ -168,7 +168,7 @@ const CafeDetailScreen = ({ navigation, route }) => {
             <Text style={styles.sectionTitle}>Details</Text>
             <View style={styles.metaContainer}>
               <View style={styles.metaRow}>
-                <Ionicons name="calendar-outline" size={18} color={COLORS.textMuted} />
+                <Icon name="calendar-outline" size={18} color={COLORS.textMuted} />
                 <Text style={styles.metaLabel}>
                   {cafe.status === 'visited' ? 'Visited on' : 'Added on'}
                 </Text>
@@ -177,7 +177,7 @@ const CafeDetailScreen = ({ navigation, route }) => {
                 </Text>
               </View>
               <View style={styles.metaRow}>
-                <Ionicons
+                <Icon
                   name={cafe.isPublic ? 'globe-outline' : 'lock-closed-outline'}
                   size={18}
                   color={COLORS.textMuted}
@@ -198,7 +198,7 @@ const CafeDetailScreen = ({ navigation, route }) => {
           style={[styles.actionBtn, styles.editBtn]}
           onPress={handleEdit}
         >
-          <Ionicons name="create-outline" size={22} color={COLORS.primary} />
+          <Icon name="create-outline" size={22} color={COLORS.primary} />
           <Text style={styles.editBtnText}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -210,7 +210,7 @@ const CafeDetailScreen = ({ navigation, route }) => {
             <ActivityIndicator size="small" color={COLORS.error} />
           ) : (
             <>
-              <Ionicons name="trash-outline" size={22} color={COLORS.error} />
+              <Icon name="trash-outline" size={22} color={COLORS.error} />
               <Text style={styles.deleteBtnText}>Delete</Text>
             </>
           )}

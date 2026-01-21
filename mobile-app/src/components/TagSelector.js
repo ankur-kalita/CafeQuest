@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from './Icon';
 import { COLORS, SIZES } from '../constants/theme';
 import { CAFE_TAGS } from '../constants/tags';
 
@@ -21,7 +21,7 @@ const TagSelector = ({ selectedTags = [], onTagPress, horizontal = false }) => {
             onPress={() => onTagPress(tag.id)}
             activeOpacity={0.7}
           >
-            <Ionicons
+            <Icon
               name={tag.icon}
               size={16}
               color={isSelected ? COLORS.white : COLORS.primary}

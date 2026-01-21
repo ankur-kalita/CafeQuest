@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from '../components/Icon';
 import { cafesAPI } from '../api';
 import CafeCard from '../components/CafeCard';
 import FilterBar from '../components/FilterBar';
@@ -68,7 +68,7 @@ const HomeScreen = ({ navigation }) => {
 
   const renderEmpty = () => (
     <View style={styles.emptyContainer}>
-      <Ionicons name="cafe-outline" size={64} color={COLORS.textMuted} />
+      <Icon name="cafe-outline" size={64} color={COLORS.textMuted} />
       <Text style={styles.emptyTitle}>No cafes yet</Text>
       <Text style={styles.emptyText}>
         {searchQuery || selectedStatus || selectedTags.length > 0
@@ -83,7 +83,7 @@ const HomeScreen = ({ navigation }) => {
       {/* Search Bar */}
       <View style={styles.searchContainer}>
         <View style={styles.searchBar}>
-          <Ionicons name="search" size={20} color={COLORS.textMuted} />
+          <Icon name="search" size={20} color={COLORS.textMuted} />
           <TextInput
             style={styles.searchInput}
             placeholder="Search cafes..."
@@ -92,7 +92,7 @@ const HomeScreen = ({ navigation }) => {
             onChangeText={setSearchQuery}
           />
           {searchQuery.length > 0 && (
-            <Ionicons
+            <Icon
               name="close-circle"
               size={20}
               color={COLORS.textMuted}

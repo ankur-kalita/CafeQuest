@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from '../components/Icon';
 import { discoverAPI } from '../api';
 import CafeCard from '../components/CafeCard';
 import { COLORS, SIZES } from '../constants/theme';
@@ -96,7 +96,7 @@ const DiscoverScreen = ({ navigation }) => {
         style={styles.saveBtn}
         onPress={() => handleSaveCafe(item._id)}
       >
-        <Ionicons name="bookmark-outline" size={18} color={COLORS.primary} />
+        <Icon name="bookmark-outline" size={18} color={COLORS.primary} />
         <Text style={styles.saveBtnText}>Save to Wishlist</Text>
       </TouchableOpacity>
     </View>
@@ -104,7 +104,7 @@ const DiscoverScreen = ({ navigation }) => {
 
   const renderEmpty = () => (
     <View style={styles.emptyContainer}>
-      <Ionicons name="compass-outline" size={64} color={COLORS.textMuted} />
+      <Icon name="compass-outline" size={64} color={COLORS.textMuted} />
       <Text style={styles.emptyTitle}>No cafes to discover</Text>
       <Text style={styles.emptyText}>
         {searchQuery || selectedTags.length > 0
@@ -128,7 +128,7 @@ const DiscoverScreen = ({ navigation }) => {
       {/* Search Bar */}
       <View style={styles.searchContainer}>
         <View style={styles.searchBar}>
-          <Ionicons name="search" size={20} color={COLORS.textMuted} />
+          <Icon name="search" size={20} color={COLORS.textMuted} />
           <TextInput
             style={styles.searchInput}
             placeholder="Search cafes..."
@@ -137,7 +137,7 @@ const DiscoverScreen = ({ navigation }) => {
             onChangeText={setSearchQuery}
           />
           {searchQuery.length > 0 && (
-            <Ionicons
+            <Icon
               name="close-circle"
               size={20}
               color={COLORS.textMuted}
@@ -162,7 +162,7 @@ const DiscoverScreen = ({ navigation }) => {
                 style={[styles.tagChip, isSelected && styles.tagChipActive]}
                 onPress={() => handleTagChange(item.id)}
               >
-                <Ionicons
+                <Icon
                   name={item.icon}
                   size={14}
                   color={isSelected ? COLORS.white : COLORS.primary}
@@ -178,7 +178,7 @@ const DiscoverScreen = ({ navigation }) => {
 
       {/* Info Banner */}
       <View style={styles.infoBanner}>
-        <Ionicons name="information-circle-outline" size={20} color={COLORS.textMuted} />
+        <Icon name="information-circle-outline" size={20} color={COLORS.textMuted} />
         <Text style={styles.infoText}>
           Discover cafes shared by other coffee lovers
         </Text>

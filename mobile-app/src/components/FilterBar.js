@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from './Icon';
 import { COLORS, SIZES } from '../constants/theme';
 import { CAFE_STATUS, CAFE_TAGS } from '../constants/tags';
 
@@ -63,7 +63,7 @@ const FilterBar = ({
                 style={[styles.tagChip, isSelected && styles.tagChipActive]}
                 onPress={() => onTagChange(tag.id)}
               >
-                <Ionicons
+                <Icon
                   name={tag.icon}
                   size={14}
                   color={isSelected ? COLORS.white : COLORS.primary}

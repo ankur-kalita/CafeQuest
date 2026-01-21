@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from './Icon';
 import { COLORS, SIZES, SHADOWS } from '../constants/theme';
 import { getTagById } from '../constants/tags';
 
 const CafeCard = ({ cafe, onPress, showUser = false }) => {
   const renderStars = (rating) => {
     return [...Array(5)].map((_, index) => (
-      <Ionicons
+      <Icon
         key={index}
         name={index < rating ? 'star' : 'star-outline'}
         size={14}
@@ -22,7 +22,7 @@ const CafeCard = ({ cafe, onPress, showUser = false }) => {
         <Image source={{ uri: cafe.photo }} style={styles.image} />
       ) : (
         <View style={[styles.image, styles.placeholderImage]}>
-          <Ionicons name="cafe-outline" size={40} color={COLORS.textMuted} />
+          <Icon name="cafe-outline" size={40} color={COLORS.textMuted} />
         </View>
       )}
       <View style={styles.overlay}>
@@ -37,7 +37,7 @@ const CafeCard = ({ cafe, onPress, showUser = false }) => {
           {cafe.name}
         </Text>
         <View style={styles.locationRow}>
-          <Ionicons name="location-outline" size={12} color={COLORS.textMuted} />
+          <Icon name="location-outline" size={12} color={COLORS.textMuted} />
           <Text style={styles.location} numberOfLines={1}>
             {cafe.location}
           </Text>
@@ -49,7 +49,7 @@ const CafeCard = ({ cafe, onPress, showUser = false }) => {
               const tag = getTagById(tagId);
               return tag ? (
                 <View key={tagId} style={styles.tag}>
-                  <Ionicons name={tag.icon} size={10} color={COLORS.primary} />
+                  <Icon name={tag.icon} size={10} color={COLORS.primary} />
                   <Text style={styles.tagText}>{tag.label}</Text>
                 </View>
               ) : null;
@@ -61,7 +61,7 @@ const CafeCard = ({ cafe, onPress, showUser = false }) => {
         )}
         {showUser && cafe.userId && (
           <View style={styles.userRow}>
-            <Ionicons name="person-circle-outline" size={14} color={COLORS.textMuted} />
+            <Icon name="person-circle-outline" size={14} color={COLORS.textMuted} />
             <Text style={styles.userName}>
               {cafe.userId.username || 'Anonymous'}
             </Text>
