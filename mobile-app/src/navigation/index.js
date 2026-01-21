@@ -33,7 +33,7 @@ const AuthStack = () => (
 const MainTabs = () => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
+      tabBarIcon: ({ focused, color }) => {
         let iconName;
 
         if (route.name === 'Home') {
@@ -46,27 +46,41 @@ const MainTabs = () => (
           iconName = focused ? 'person' : 'person-outline';
         }
 
-        return <Ionicons name={iconName} size={size} color={color} />;
+        return <Ionicons name={iconName} size={focused ? 26 : 24} color={color} />;
       },
       tabBarActiveTintColor: COLORS.primary,
       tabBarInactiveTintColor: COLORS.textMuted,
       tabBarStyle: {
         backgroundColor: COLORS.white,
         borderTopColor: COLORS.border,
-        paddingBottom: 5,
-        paddingTop: 5,
-        height: 60,
+        borderTopWidth: 1,
+        paddingBottom: 8,
+        paddingTop: 8,
+        height: 65,
+        shadowColor: COLORS.primary,
+        shadowOffset: { width: 0, height: -4 },
+        shadowOpacity: 0.08,
+        shadowRadius: 8,
+        elevation: 10,
       },
       tabBarLabelStyle: {
-        fontSize: 12,
-        fontWeight: '500',
+        fontSize: 11,
+        fontWeight: '600',
+        marginTop: 2,
       },
       headerStyle: {
         backgroundColor: COLORS.primary,
+        shadowColor: COLORS.primary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
+        elevation: 8,
       },
       headerTintColor: COLORS.white,
       headerTitleStyle: {
-        fontWeight: '600',
+        fontWeight: '700',
+        fontSize: 18,
+        letterSpacing: -0.3,
       },
     })}
   >

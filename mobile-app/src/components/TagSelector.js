@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    gap: 8,
   },
   scrollContainer: {
     flexDirection: 'row',
@@ -47,23 +48,24 @@ const styles = StyleSheet.create({
   tag: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.background,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginRight: 8,
-    marginBottom: 8,
-    borderWidth: 1,
-    borderColor: COLORS.primary,
+    backgroundColor: COLORS.accentLight,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 22,
+    marginRight: 10,
+    marginBottom: 10,
+    borderWidth: 1.5,
+    borderColor: COLORS.secondary,
   },
   tagSelected: {
     backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
   },
   tagText: {
     fontSize: SIZES.sm,
     color: COLORS.primary,
-    marginLeft: 6,
-    fontWeight: '500',
+    marginLeft: 8,
+    fontWeight: '600',
   },
   tagTextSelected: {
     color: COLORS.white,

@@ -14,6 +14,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import { COLORS, SIZES, SHADOWS } from '../constants/theme';
+import CoffeeIllustration from '../components/CoffeeIllustration';
 
 const SignupScreen = ({ navigation }) => {
   const { register, clearError } = useAuth();
@@ -62,7 +63,7 @@ const SignupScreen = ({ navigation }) => {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.header}>
-          <Ionicons name="cafe" size={60} color={COLORS.primary} />
+          <CoffeeIllustration size={100} />
           <Text style={styles.title}>Create Account</Text>
           <Text style={styles.subtitle}>Start your cafe journey today</Text>
         </View>
@@ -164,23 +165,25 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    marginBottom: 32,
+    marginBottom: 36,
   },
   title: {
-    fontSize: SIZES.xxl,
+    fontSize: SIZES.xxxl,
     fontWeight: '700',
     color: COLORS.text,
-    marginTop: 16,
+    marginTop: 20,
+    letterSpacing: -0.5,
   },
   subtitle: {
     fontSize: SIZES.md,
     color: COLORS.textLight,
-    marginTop: 8,
+    marginTop: 10,
     textAlign: 'center',
+    lineHeight: 22,
   },
   form: {
     backgroundColor: COLORS.white,
-    borderRadius: SIZES.radiusLg,
+    borderRadius: SIZES.radiusXl,
     padding: SIZES.padding * 1.5,
     ...SHADOWS.medium,
   },
@@ -188,28 +191,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.background,
-    borderRadius: SIZES.radius,
-    marginBottom: 16,
-    paddingHorizontal: 12,
+    borderRadius: SIZES.radiusLg,
+    marginBottom: 18,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
   inputIcon: {
-    marginRight: 8,
+    marginRight: 12,
   },
   input: {
     flex: 1,
-    paddingVertical: 14,
-    fontSize: SIZES.lg,
+    paddingVertical: 16,
+    fontSize: SIZES.md,
     color: COLORS.text,
   },
   eyeIcon: {
-    padding: 4,
+    padding: 6,
   },
   button: {
     backgroundColor: COLORS.primary,
-    borderRadius: SIZES.radius,
-    paddingVertical: 16,
+    borderRadius: SIZES.radiusLg,
+    paddingVertical: 18,
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: 12,
+    ...SHADOWS.small,
   },
   buttonDisabled: {
     opacity: 0.7,
@@ -217,12 +223,13 @@ const styles = StyleSheet.create({
   buttonText: {
     color: COLORS.white,
     fontSize: SIZES.lg,
-    fontWeight: '600',
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 24,
+    marginTop: 28,
   },
   footerText: {
     color: COLORS.textLight,
@@ -231,7 +238,7 @@ const styles = StyleSheet.create({
   linkText: {
     color: COLORS.primary,
     fontSize: SIZES.md,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 });
 

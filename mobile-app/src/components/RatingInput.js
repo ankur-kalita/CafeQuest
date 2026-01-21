@@ -34,9 +34,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 6,
   },
   star: {
-    padding: 2,
+    padding: 4,
   },
 });
 
