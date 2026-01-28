@@ -4,6 +4,23 @@ import Icon from './Icon';
 import { COLORS, SIZES, SHADOWS } from '../constants/theme';
 import { getTagById } from '../constants/tags';
 
+// Placeholder cafe images for cards without photos
+const PLACEHOLDER_IMAGES = [
+  'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop',
+];
+
+const getPlaceholderImage = (name) => {
+  let hash = 0;
+  for (let i = 0; i < (name || '').length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return PLACEHOLDER_IMAGES[Math.abs(hash) % PLACEHOLDER_IMAGES.length];
+};
+
 const CafeCard = ({ cafe, onPress, showUser = false }) => {
   const renderStars = (rating) => {
     return [...Array(5)].map((_, index) => (
@@ -18,13 +35,10 @@ const CafeCard = ({ cafe, onPress, showUser = false }) => {
 
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
-      {cafe.photo ? (
-        <Image source={{ uri: cafe.photo }} style={styles.image} />
-      ) : (
-        <View style={[styles.image, styles.placeholderImage]}>
-          <Icon name="cafe-outline" size={40} color={COLORS.textMuted} />
-        </View>
-      )}
+      <Image
+        source={{ uri: cafe.photo || getPlaceholderImage(cafe.name) }}
+        style={styles.image}
+      />
       <View style={styles.overlay}>
         <View style={styles.statusBadge}>
           <Text style={styles.statusText}>

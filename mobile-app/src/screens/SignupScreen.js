@@ -106,6 +106,8 @@ const SignupScreen = ({ navigation }) => {
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
               autoCapitalize="none"
+              textContentType="oneTimeCode"
+              autoComplete="off"
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
               <Icon
@@ -126,6 +128,8 @@ const SignupScreen = ({ navigation }) => {
               onChangeText={setConfirmPassword}
               secureTextEntry={!showPassword}
               autoCapitalize="none"
+              textContentType="oneTimeCode"
+              autoComplete="off"
             />
           </View>
 

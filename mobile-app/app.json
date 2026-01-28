@@ -36,7 +36,8 @@
           "cameraPermission": "CafeQuest needs access to your camera to take cafe pictures."
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-secure-store"
     ]
   }
 }

@@ -54,9 +54,8 @@ const CafeDetailScreen = ({ navigation, route }) => {
             setDeleting(true);
             try {
               await cafesAPI.delete(cafeId);
-              Alert.alert('Deleted', 'Cafe has been removed from your collection.', [
-                { text: 'OK', onPress: () => navigation.navigate('Home') },
-              ]);
+              navigation.goBack();
+              Alert.alert('Deleted', 'Cafe has been removed from your collection.');
             } catch (error) {
               Alert.alert('Error', error.message);
             } finally {

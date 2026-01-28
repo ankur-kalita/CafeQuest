@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   RefreshControl,
   TextInput,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Icon from '../components/Icon';
@@ -20,15 +21,25 @@ const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [selectedTags, setSelectedTags] = useState([]);
+  const debounceTimer = useRef(null);
 
-  const fetchCafes = async () => {
+  // Debounce search input
+  useEffect(() => {
+    debounceTimer.current = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 400);
+    return () => clearTimeout(debounceTimer.current);
+  }, [searchQuery]);
+
+  const fetchCafes = useCallback(async () => {
     try {
       const params = {};
       if (selectedStatus) params.status = selectedStatus;
       if (selectedTags.length > 0) params.tags = selectedTags.join(',');
-      if (searchQuery.trim()) params.search = searchQuery.trim();
+      if (debouncedQuery.trim()) params.search = debouncedQuery.trim();
 
       const response = await cafesAPI.getAll(params);
       setCafes(response.data);
@@ -38,12 +49,12 @@ const HomeScreen = ({ navigation }) => {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [selectedStatus, selectedTags, debouncedQuery]);
 
   useFocusEffect(
     useCallback(() => {
       fetchCafes();
-    }, [selectedStatus, selectedTags, searchQuery])
+    }, [fetchCafes])
   );
 
   const onRefresh = () => {
@@ -55,6 +66,11 @@ const HomeScreen = ({ navigation }) => {
     setSelectedTags((prev) =>
       prev.includes(tagId) ? prev.filter((t) => t !== tagId) : [...prev, tagId]
     );
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    setDebouncedQuery('');
   };
 
   const renderCafe = ({ item, index }) => (
@@ -78,9 +94,17 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 
-  const renderHeader = () => (
-    <>
-      {/* Search Bar */}
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      {/* Search Bar - outside FlatList to prevent focus loss */}
       <View style={styles.searchContainer}>
         <View style={styles.searchBar}>
           <Icon name="search" size={20} color={COLORS.textMuted} />
@@ -90,19 +114,17 @@ const HomeScreen = ({ navigation }) => {
             placeholderTextColor={COLORS.textMuted}
             value={searchQuery}
             onChangeText={setSearchQuery}
+            autoCorrect={false}
           />
           {searchQuery.length > 0 && (
-            <Icon
-              name="close-circle"
-              size={20}
-              color={COLORS.textMuted}
-              onPress={() => setSearchQuery('')}
-            />
+            <TouchableOpacity onPress={clearSearch} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+              <Icon name="close-circle" size={20} color={COLORS.textMuted} />
+            </TouchableOpacity>
           )}
         </View>
       </View>
 
-      {/* Filters */}
+      {/* Filters - outside FlatList */}
       <FilterBar
         selectedStatus={selectedStatus}
         onStatusChange={setSelectedStatus}
@@ -116,26 +138,14 @@ const HomeScreen = ({ navigation }) => {
           {cafes.length} {cafes.length === 1 ? 'cafe' : 'cafes'}
         </Text>
       </View>
-    </>
-  );
 
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={COLORS.primary} />
-      </View>
-    );
-  }
-
-  return (
-    <View style={styles.container}>
+      {/* Cafe List */}
       <FlatList
         data={cafes}
         renderItem={renderCafe}
         keyExtractor={(item) => item._id}
         numColumns={2}
         contentContainerStyle={styles.listContent}
-        ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderEmpty}
         refreshControl={
           <RefreshControl
@@ -185,7 +195,7 @@ const styles = StyleSheet.create({
   },
   resultsRow: {
     paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingVertical: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

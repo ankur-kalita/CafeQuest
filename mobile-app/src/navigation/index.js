@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from '../components/Icon';
 import { useAuth } from '../context/AuthContext';
@@ -16,7 +16,7 @@ import CafeDetailScreen from '../screens/CafeDetailScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const AuthStack = () => (
@@ -70,17 +70,12 @@ const MainTabs = () => (
       },
       headerStyle: {
         backgroundColor: COLORS.primary,
-        shadowColor: COLORS.primary,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.15,
-        shadowRadius: 8,
-        elevation: 8,
       },
+      headerShadowVisible: true,
       headerTintColor: COLORS.white,
       headerTitleStyle: {
         fontWeight: '700',
         fontSize: 18,
-        letterSpacing: -0.3,
       },
     })}
   >

@@ -2,10 +2,10 @@ import axios from 'axios';
 import { Platform } from 'react-native';
 import storage from './storage';
 
-// Use localhost for web, IP address for physical device
+// Use localhost for simulator/web, IP for physical device
 const API_URL = Platform.OS === 'web'
   ? 'http://localhost:5001/api'
-  : 'http://10.0.6.137:5001/api';
+  : 'http://localhost:5001/api';
 
 const api = axios.create({
   baseURL: API_URL,

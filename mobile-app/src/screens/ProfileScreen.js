@@ -163,7 +163,10 @@ const ProfileScreen = () => {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Account</Text>
         <View style={styles.menuContainer}>
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => Alert.alert('Whoa there! \u2615', "Our devs are still brewing this feature. Grab a coffee and check back later!")}
+          >
             <View style={styles.menuLeft}>
               <Icon name="person-outline" size={22} color={COLORS.text} />
               <Text style={styles.menuText}>Edit Profile</Text>
@@ -171,7 +174,10 @@ const ProfileScreen = () => {
             <Icon name="chevron-forward" size={20} color={COLORS.textMuted} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => Alert.alert('Nice try! \u2699\uFE0F', "Settings are steeping like a fine pour-over. Almost ready... but not today!")}
+          >
             <View style={styles.menuLeft}>
               <Icon name="settings-outline" size={22} color={COLORS.text} />
               <Text style={styles.menuText}>Settings</Text>
@@ -179,7 +185,10 @@ const ProfileScreen = () => {
             <Icon name="chevron-forward" size={20} color={COLORS.textMuted} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => Alert.alert('Need help? \uD83E\uDD14', "So do we! Just kidding. This page is on a coffee break. Try yelling at your screen... or wait for the next update!")}
+          >
             <View style={styles.menuLeft}>
               <Icon name="help-circle-outline" size={22} color={COLORS.text} />
               <Text style={styles.menuText}>Help & Support</Text>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Alert,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Icon from '../components/Icon';
@@ -22,16 +23,26 @@ const DiscoverScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+  const debounceTimer = useRef(null);
 
-  const fetchCafes = async (pageNum = 1, append = false) => {
+  // Debounce search input
+  useEffect(() => {
+    debounceTimer.current = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 400);
+    return () => clearTimeout(debounceTimer.current);
+  }, [searchQuery]);
+
+  const fetchCafes = useCallback(async (pageNum = 1, append = false) => {
     try {
       const params = { page: pageNum, limit: 10 };
       if (selectedTags.length > 0) params.tags = selectedTags.join(',');
-      if (searchQuery.trim()) params.search = searchQuery.trim();
+      if (debouncedQuery.trim()) params.search = debouncedQuery.trim();
 
       const response = await discoverAPI.getPublicCafes(params);
       const { cafes: newCafes, pages } = response.data;
@@ -50,13 +61,13 @@ const DiscoverScreen = ({ navigation }) => {
       setRefreshing(false);
       setLoadingMore(false);
     }
-  };
+  }, [selectedTags, debouncedQuery]);
 
   useFocusEffect(
     useCallback(() => {
       setPage(1);
       fetchCafes(1, false);
-    }, [selectedTags, searchQuery])
+    }, [fetchCafes])
   );
 
   const onRefresh = () => {
@@ -78,6 +89,11 @@ const DiscoverScreen = ({ navigation }) => {
     setSelectedTags((prev) =>
       prev.includes(tagId) ? prev.filter((t) => t !== tagId) : [...prev, tagId]
     );
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    setDebouncedQuery('');
   };
 
   const handleSaveCafe = async (cafeId) => {
@@ -123,69 +139,6 @@ const DiscoverScreen = ({ navigation }) => {
     );
   };
 
-  const renderHeader = () => (
-    <>
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <View style={styles.searchBar}>
-          <Icon name="search" size={20} color={COLORS.textMuted} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search cafes..."
-            placeholderTextColor={COLORS.textMuted}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
-          {searchQuery.length > 0 && (
-            <Icon
-              name="close-circle"
-              size={20}
-              color={COLORS.textMuted}
-              onPress={() => setSearchQuery('')}
-            />
-          )}
-        </View>
-      </View>
-
-      {/* Tags Filter */}
-      <View style={styles.tagsContainer}>
-        <FlatList
-          data={CAFE_TAGS}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.tagsList}
-          renderItem={({ item }) => {
-            const isSelected = selectedTags.includes(item.id);
-            return (
-              <TouchableOpacity
-                style={[styles.tagChip, isSelected && styles.tagChipActive]}
-                onPress={() => handleTagChange(item.id)}
-              >
-                <Icon
-                  name={item.icon}
-                  size={14}
-                  color={isSelected ? COLORS.white : COLORS.primary}
-                />
-                <Text style={[styles.tagText, isSelected && styles.tagTextActive]}>
-                  {item.label}
-                </Text>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
-
-      {/* Info Banner */}
-      <View style={styles.infoBanner}>
-        <Icon name="information-circle-outline" size={20} color={COLORS.textMuted} />
-        <Text style={styles.infoText}>
-          Discover cafes shared by other coffee lovers
-        </Text>
-      </View>
-    </>
-  );
-
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -196,12 +149,69 @@ const DiscoverScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {/* Search Bar - outside FlatList */}
+      <View style={styles.searchContainer}>
+        <View style={styles.searchBar}>
+          <Icon name="search" size={20} color={COLORS.textMuted} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search cafes..."
+            placeholderTextColor={COLORS.textMuted}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            autoCorrect={false}
+          />
+          {searchQuery.length > 0 && (
+            <TouchableOpacity onPress={clearSearch} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+              <Icon name="close-circle" size={20} color={COLORS.textMuted} />
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+
+      {/* Tags Filter - outside FlatList */}
+      <View style={styles.tagsContainer}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.tagsList}
+        >
+          {CAFE_TAGS.map((tag) => {
+            const isSelected = selectedTags.includes(tag.id);
+            return (
+              <TouchableOpacity
+                key={tag.id}
+                style={[styles.tagChip, isSelected && styles.tagChipActive]}
+                onPress={() => handleTagChange(tag.id)}
+              >
+                <Icon
+                  name={tag.icon}
+                  size={14}
+                  color={isSelected ? COLORS.white : COLORS.primary}
+                />
+                <Text style={[styles.tagText, isSelected && styles.tagTextActive]}>
+                  {tag.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
+
+      {/* Info Banner */}
+      <View style={styles.infoBanner}>
+        <Icon name="information-circle-outline" size={20} color={COLORS.textMuted} />
+        <Text style={styles.infoText}>
+          Discover cafes shared by other coffee lovers
+        </Text>
+      </View>
+
+      {/* Cafe List */}
       <FlatList
         data={cafes}
         renderItem={renderCafe}
         keyExtractor={(item) => item._id}
         contentContainerStyle={styles.listContent}
-        ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderEmpty}
         ListFooterComponent={renderFooter}
         onEndReached={loadMore}
